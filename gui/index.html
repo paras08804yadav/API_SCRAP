@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Scraper</title>
+
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .loader {
+      display: none;
+      border: 8px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 8px solid #3498db;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .terms-container {
+      margin-top: 10px; /* Space above the checkbox */
+      margin-bottom: 20px; /* Space below the checkbox */
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-description {
+      margin-top: 10px;
+      font-style: italic;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1 class="text-center">Email Scraper</h1>
+      <p class="text-center">Enter a keyword and number of pages to scrape Google for emails.</p>
+
+      <form id="scrapeForm" action="/scrape-google" method="post" onsubmit="showLoader()">
+        <div class="form-group">
+          <label for="keyword">Keyword:</label>
+          <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Enter keywords" required>
+        </div>
+
+        <div class="form-group">
+          <label for="numPages">Number of Pages:</label>
+          <input type="number" class="form-control" id="numPages" name="numPages" placeholder="Enter number of pages" required>
+        </div>
+
+        <!-- Checkbox for Validation -->
+        <div class="terms-container">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="validateCheckbox" name="validate" value="true">
+            <label class="form-check-label" for="validateCheckbox">
+              Validate* emails after scraping
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Submit</button>
+      </form>
+
+      <!-- Loader -->
+      <div id="loader" class="loader"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      * Validation pertains specifically to emails within the Gmail domain.
+    </p>
+    <p class="footer-description">
+      By checking this box, you agree to validate emails post-scraping to ensure they are from Gmail.
+    </p>
+  </footer>
+
+  <script>
+    function showLoader() {
+        document.getElementById('loader').style.display = 'block';
+        document.getElementById('submitBtn').disabled = true; // Disable the button
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Validation Results</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .card {
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    table {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    table th, table td {
+      border: 1px solid #dee2e6;
+      padding: 10px;
+      text-align: left;
+    }
+    .copy-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .copy-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Email Validation Results</h1>
+
+    <div class="card">
+      <h3>Valid Emails</h3>
+      <button class="copy-btn" onclick="copyToClipboard('validEmails')">Copy All Valid Emails</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody id="validEmailData"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Invalid Emails</h3>
+      <button class="copy-btn" onclick="copyToClipboard('invalidEmails')">Copy All Invalid Emails</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody id="invalidEmailData"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParams() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return {
+        validEmails: urlParams.get('validEmails'),
+        invalidEmails: urlParams.get('invalidEmails')
+      };
+    }
+
+    function renderEmails(emails, containerId) {
+      const emailData = document.getElementById(containerId);
+      emails.split(',').forEach(email => {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.textContent = email;
+        row.appendChild(cell);
+        emailData.appendChild(row);
+      });
+    }
+
+    function copyToClipboard(type) {
+      const emailData = document.getElementById(type === 'validEmails' ? 'validEmailData' : 'invalidEmailData');
+      const text = emailData.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert(`${type === 'validEmails' ? 'Valid' : 'Invalid'} emails copied to clipboard`);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const { validEmails, invalidEmails } = getQueryParams();
+      if (validEmails) {
+        renderEmails(validEmails, 'validEmailData');
+      }
+      if (invalidEmails) {
+        renderEmails(invalidEmails, 'invalidEmailData');
+      }
+    });
+  </script>
+</body>
+</html>
