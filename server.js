@@ -44,7 +44,7 @@ app.post('/scrape-google', async (req, res) => {
 
 // Start the server
 const PORT = process.env.PORT || 2001;
-const HOST = 'localhost';
+const HOST = '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
   console.log(`Server running on http://${HOST}:${PORT}`);
